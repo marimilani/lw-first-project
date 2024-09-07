@@ -2,12 +2,50 @@ version: 2
 
 sources:
   - name: raw
-    database: massive-seer-431123-d8.gz_raw_data
     schema: gz_raw_data
     tables:
       - name: sales
         identifier: raw_gz_sales
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: order identifier
+          - name: pdt_id
+            description: product identifier
+          - name: revenue
+            description: revenue obtained from purchase
+          - name: quantity
+            description: quantity of items purchased
+        tests:
+          - unique:
+              column_name: "(orders_id || '-'|| pdt_id)"
       - name: product
         identifier: raw_gz_product
+        description: products of Greenweez / we have one row per products_id
+        columns:
+          - name: products_id
+            description: primary key of the table
+          - name: purchase_price
+            description: price of the product
+        tests:
+          - unique: 
+              column_name: "products_id"
       - name: ship
         identifier: raw_gz_ship
+        description: shipment information of Greenweez orders / we have one row per orders_id 
+        columns:
+          - name: orders_id
+            description: primary key of the table
+          - name: shipping_fee
+            description: shipping fee charged per oder
+          - name: shipping_fee_1
+            description: duplicate of shipping_fee
+          - name: logcost
+            description: logistics cost of the order
+          - name: ship_cost
+            description: cost of shipping the order
+        tests:
+          - unique: 
+              column_name: "orders_id"
