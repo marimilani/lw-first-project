@@ -40,3 +40,10 @@ models:
     # Applies to all files under models/example/
     example:
       +materialized: table
+    intermediate: 
+      +materialized: view
+    mart: 
+      +materialized: table
+      finance_days: 
+        +schema: finance
+
